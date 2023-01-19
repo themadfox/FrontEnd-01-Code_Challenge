@@ -22,13 +22,30 @@
 
 .form {
     display: grid;
-    padding: 1rem;
-    column-gap: 1rem;
+    padding: 1rem 0;
+    gap: 1rem;
+    grid-auto-rows: 2.5rem;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 }
 
-.form input {
-    height: 2rem;
+.form input, .form select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #000;
+}
+
+.form button {
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    background-color: #11b7ab;
+}
+
+.form button:hover {
+    background-color: #0d9c8f;
 }
 
 .cards_wrapper {
@@ -53,21 +70,22 @@
     background-color: rgb(70, 72, 78);
 }
 
-.card:hover  .delete_button {
+.card:hover .delete_button {
     right: 0;
 }
 
-.delete_button{
+.delete_button {
     right: -55px;
     width: 55px;
     height: 100%;
     position: absolute;
     transition: all 0.2s ease-in-out;
     background-color: rgb(255, 59, 48);
-    border:none;
+    border: none;
     cursor: pointer;
 }
-.delete_button:hover{
+
+.delete_button:hover {
     background-color: rgb(200, 50, 50);
 }
 

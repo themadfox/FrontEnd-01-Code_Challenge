@@ -6,17 +6,35 @@ function App () {
 
 	const getCharacters = async () => {
 		const { data } = await axios.get( 'https://rickandmortyapi.com/api/character' )
-		console.log( data.results )
 
 		setCharacterList( data.results )
 	}
 
-	const hdlAddCharacter = () => {
-		// Do Something
+	const hdlAddCharacter = ( e ) => {
+		e.preventDefault()
+
+		const form = document.getElementById( 'addCharacter' )
+
+		setCharacterList( [
+			{
+				id: Math.random(),
+				name: form?.elements?.name?.value,
+				status: form?.elements?.status?.value,
+				species: form?.elements?.species?.value,
+				location: {
+					name: form?.elements?.location?.value
+				},
+				origin: {
+					name: form?.elements?.origin?.value
+				},
+				image: form?.elements?.image?.value
+			},
+			...characterList
+		] )
 	}
 
-	const hdlDeleteCharacter = (id) => {
-	setCharacterList( characterList.filter( ( character ) => character.id !== id ) )
+	const hdlDeleteCharacter = ( id ) => {
+		setCharacterList( characterList.filter( ( character ) => character.id !== id ) )
 	}
 
 	useEffect( () => {
@@ -26,13 +44,19 @@ function App () {
 	return (
 		<div>
 			<h1>Add Character</h1>
-			<form className='form'>
-				<input type="text" placeholder='Name'/>
-				<input type="text" placeholder='Status'/>
-				<input type="text" placeholder='Origin'/>
-				<input type="text" placeholder='Image'/>
-				<input type="text" placeholder='Location'/>
-				<button type="submit">Add</button>
+			<form id="addCharacter" className="form">
+				<input type="text" placeholder="Image" name="image"/>
+				<input type="text" placeholder="Name" name="name"/>
+				<select name="status">
+					<option value="" disabled selected>Select Status</option>
+					<option value="Alive">Alive</option>
+					<option value="Dead">Dead</option>
+					<option value="unknown">Unknown</option>
+				</select>
+				<input type="text" placeholder="Species" name="species"/>
+				<input type="text" placeholder="Origin" name="origin"/>
+				<input type="text" placeholder="Location" name="location"/>
+				<button type="submit" onClick={ hdlAddCharacter }>Add</button>
 			</form>
 			<div className="cards_wrapper">
 				{ characterList.map( ( character ) => (
@@ -59,7 +83,9 @@ function App () {
 								<strong>Last known location:</strong> { character.location.name }
 							</p>
 						</aside>
-						<button className="delete_button" onClick={ ()=>hdlDeleteCharacter(character.id) } type="button">Delete</button>
+						<button className="delete_button" onClick={ () => hdlDeleteCharacter( character.id ) }
+										type="button">Delete
+						</button>
 					</article>
 				) ) }
 			</div>
