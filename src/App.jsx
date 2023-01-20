@@ -2,20 +2,14 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 function App () {
-	const [ characterList, setCharacterList ] = useState( [] )
-
-	const getCharacters = async () => {
-		const { data } = await axios.get( 'https://rickandmortyapi.com/api/character' )
-
-		setCharacterList( data.results )
-	}
+	// Data Endpoint: https://rickandmortyapi.com/api/character
 
 	const hdlAddCharacter = ( e ) => {
 		e.preventDefault()
 
 		const form = document.getElementById( 'addCharacter' )
 
-		setCharacterList( [
+		/*setCharacterList( [
 			{
 				id: Math.random(),
 				name: form?.elements?.name?.value,
@@ -30,15 +24,14 @@ function App () {
 				image: form?.elements?.image?.value
 			},
 			...characterList
-		] )
+		] )*/
 	}
 
 	const hdlDeleteCharacter = ( id ) => {
-		setCharacterList( characterList.filter( ( character ) => character.id !== id ) )
+		
 	}
 
 	useEffect( () => {
-		getCharacters()
 	}, [] )
 
 	return (
@@ -56,38 +49,36 @@ function App () {
 				<input type="text" placeholder="Species" name="species"/>
 				<input type="text" placeholder="Origin" name="origin"/>
 				<input type="text" placeholder="Location" name="location"/>
-				<button type="submit" onClick={ hdlAddCharacter }>Add</button>
+				
 			</form>
 			<div className="cards_wrapper">
-				{ characterList.map( ( character ) => (
 					<article className="card">
 						<figure>
-							<img src={ character.image } alt={ character.name }/>
+							<img src=""/>
 						</figure>
 						<aside className="description">
-							<h2>{ character.name }</h2>
+							<h2>character.name</h2>
 							<p>
 								<strong>Status:</strong>
-								{ character.status }
+								character.status
 								<div
-									style={ { backgroundColor: character.status === 'Alive' ? 'lawngreen' : character.status === 'Dead' ? 'palevioletred' : 'dimgray' } }/>
+									style={ { backgroundColor: 'character.status' === 'Alive' ? 'lawngreen' : 'character.status' === 'Dead' ? 'palevioletred' : 'dimgray' } }/>
 							</p>
 							<p>
 								<strong>Species:</strong>
-								{ character.species }
+								character.species 
 							</p>
 							<p>
-								<strong>Origin:</strong> { character.origin.name }
+								<strong>Origin:</strong>  character.origin.name 
 							</p>
 							<p>
-								<strong>Last known location:</strong> { character.location.name }
+								<strong>Last known location:</strong>  character.location.name 
 							</p>
 						</aside>
-						<button className="delete_button" onClick={ () => hdlDeleteCharacter( character.id ) }
+						<button className="delete_button" onClick={ () => hdlDeleteCharacter( 'character.id' ) }
 										type="button">Delete
 						</button>
 					</article>
-				) ) }
 			</div>
 		</div>
 	)
