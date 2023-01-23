@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-function App () {
-	const [ characterList, setCharacterList ] = useState( [] )
+function App() {
+	const [characterList, setCharacterList] = useState([])
 
 	const getCharacters = async () => {
-		const { data } = await axios.get( 'https://rickandmortyapi.com/api/character' )
+		const { data } = await axios.get('https://rickandmortyapi.com/api/character')
 
-		setCharacterList( data.results )
+		setCharacterList(data.results)
 	}
 
-	const hdlAddCharacter = ( e ) => {
+	const hdlAddCharacter = e => {
 		e.preventDefault()
 
-		const form = document.getElementById( 'addCharacter' )
+		const form = document.getElementById('addCharacter')
 
-		setCharacterList( [
+		setCharacterList([
 			{
 				id: Math.random(),
 				name: form?.elements?.name?.value,
@@ -29,65 +29,82 @@ function App () {
 				},
 				image: form?.elements?.image?.value
 			},
-			...characterList
-		] )
+			...characterList,
+			(test = 'ssss')
+		])
 	}
 
-	const hdlDeleteCharacter = ( id ) => {
-		setCharacterList( characterList.filter( ( character ) => character.id !== id ) )
+	const hdlDeleteCharacter = id => {
+		setCharacterList(characterList.filter(character => character.id !== id))
 	}
 
-	useEffect( () => {
+	useEffect(() => {
 		getCharacters()
-	}, [] )
+	}, [])
 
 	return (
 		<div>
 			<h1>Add Character</h1>
-			<form id="addCharacter" className="form">
-				<input type="text" placeholder="Image" name="image"/>
-				<input type="text" placeholder="Name" name="name"/>
-				<select name="status">
-					<option value="" disabled selected>Select Status</option>
-					<option value="Alive">Alive</option>
-					<option value="Dead">Dead</option>
-					<option value="unknown">Unknown</option>
+			<form id='addCharacter' className='form'>
+				<input type='text' placeholder='Image' name='image' />
+				<input type='text' placeholder='Name' name='name' />
+				<select name='status'>
+					<option value='' disabled selected>
+						Select Status
+					</option>
+					<option value='Alive'>Alive</option>
+					<option value='Dead'>Dead</option>
+					<option value='unknown'>Unknown</option>
 				</select>
-				<input type="text" placeholder="Species" name="species"/>
-				<input type="text" placeholder="Origin" name="origin"/>
-				<input type="text" placeholder="Location" name="location"/>
-				<button type="submit" onClick={ hdlAddCharacter }>Add</button>
+				<input type='text' placeholder='Species' name='species' />
+				<input type='text' placeholder='Origin' name='origin' />
+				<input type='text' placeholder='Location' name='location' />
+				<button type='submit' onClick={hdlAddCharacter}>
+					Add
+				</button>
 			</form>
-			<div className="cards_wrapper">
-				{ characterList.map( ( character ) => (
-					<article className="card">
+			<div className='cards_wrapper'>
+				{characterList.map(character => (
+					<article className='card'>
 						<figure>
-							<img src={ character.image } alt={ character.name }/>
+							<img src={character.image} alt={character.name} />
 						</figure>
-						<aside className="description">
-							<h2>{ character.name }</h2>
+						<aside className='description'>
+							<h2>{character.name}</h2>
 							<p>
 								<strong>Status:</strong>
-								{ character.status }
+								{character.status}
 								<div
-									style={ { backgroundColor: character.status === 'Alive' ? 'lawngreen' : character.status === 'Dead' ? 'palevioletred' : 'dimgray' } }/>
+									style={{
+										backgroundColor:
+											character.status === 'Alive'
+												? 'lawngreen'
+												: character.status === 'Dead'
+												? 'palevioletred'
+												: 'dimgray'
+									}}
+								/>
 							</p>
 							<p>
 								<strong>Species:</strong>
-								{ character.species }
+								{character.species}
 							</p>
 							<p>
-								<strong>Origin:</strong> { character.origin.name }
+								<strong>Origin:</strong> {character.origin.name}
 							</p>
 							<p>
-								<strong>Last known location:</strong> { character.location.name }
+								<strong>Last known location:</strong> {character.location.name}
 							</p>
 						</aside>
-						<button className="delete_button" onClick={ () => hdlDeleteCharacter( character.id ) }
-										type="button">Delete
+						<button
+							className='delete_button'
+							onClick={() => hdlDeleteCharacter(character.id)}
+							type='button'
+						>
+							Delete
 						</button>
 					</article>
-				) ) }
+				))}
 			</div>
 		</div>
 	)
